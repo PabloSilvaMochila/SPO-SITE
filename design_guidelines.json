@@ -1,0 +1,154 @@
+{
+  "brand_identity": {
+    "name": "Medical Association Design System",
+    "persona": "E1: The Anti-AI Designer",
+    "core_values": [
+      "Authority without Rigidity",
+      "Human-Centric Science",
+      "Clinical Zen",
+      "Evidence-Based Aesthetics"
+    ],
+    "emotional_tone": "Trustworthy, Calm, Intellectual, Forward-Thinking"
+  },
+  "typography": {
+    "font_family": {
+      "headings": "Spectral, serif",
+      "body": "Manrope, sans-serif",
+      "mono": "JetBrains Mono, monospace"
+    },
+    "weights": {
+      "headings": "font-semibold (600) or font-light (300) - Avoid Regular",
+      "body": "font-normal (400)",
+      "bold": "font-bold (700)"
+    },
+    "usage_rules": {
+      "h1": "text-5xl md:text-7xl font-serif tracking-tight leading-[1.1] text-primary-900",
+      "h2": "text-3xl md:text-5xl font-serif tracking-tight text-primary-900 mb-6",
+      "h3": "text-xl md:text-2xl font-sans font-semibold tracking-normal text-primary-800",
+      "body": "text-base md:text-lg font-sans leading-relaxed text-stone-600",
+      "caption": "text-sm font-mono tracking-wider uppercase text-stone-500"
+    },
+    "installation": "Import fonts via Google Fonts in index.css: @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&family=Spectral:ital,wght@0,300;0,400;0,600;1,400&display=swap');"
+  },
+  "colors": {
+    "palette": {
+      "primary": {
+        "name": "Deep Teal (Trust)",
+        "hex": "#0F766E",
+        "tailwind": "teal-700",
+        "usage": "Headings, Primary Buttons, Borders"
+      },
+      "secondary": {
+        "name": "Soft Sage (Calm)",
+        "hex": "#F0FDFA",
+        "tailwind": "teal-50",
+        "usage": "Page Backgrounds, Section Highlights"
+      },
+      "accent": {
+        "name": "Burnt Orange (Vitality - The E1 Twist)",
+        "hex": "#EA580C",
+        "tailwind": "orange-600",
+        "usage": "CTAs, Highlights, Interactive States"
+      },
+      "neutral": {
+        "name": "Warm Stone",
+        "hex": "#F5F5F4",
+        "tailwind": "stone-100",
+        "usage": "Card Backgrounds, Borders"
+      },
+      "text": {
+        "primary": "stone-900",
+        "secondary": "stone-600",
+        "muted": "stone-400"
+      }
+    },
+    "gradients": {
+      "hero_overlay": "bg-gradient-to-b from-teal-50/0 to-teal-50/80",
+      "card_hover": "hover:bg-gradient-to-br hover:from-white hover:to-stone-50"
+    },
+    "forbidden_colors": [
+      "#7351B7 (Generic Purple)",
+      "#1B93A4 (Generic Teal - Use Deep Teal instead)"
+    ]
+  },
+  "layout": {
+    "spacing_system": {
+      "base": "p-4",
+      "section_padding": "py-20 md:py-32",
+      "container_padding": "px-6 md:px-12",
+      "element_gap": "gap-6 md:gap-12"
+    },
+    "grid_systems": {
+      "bento_grid": "grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 auto-rows-[minmax(200px,auto)]",
+      "editorial_grid": "grid grid-cols-1 md:grid-cols-12 gap-8"
+    },
+    "container_widths": {
+      "default": "max-w-7xl mx-auto",
+      "narrow": "max-w-4xl mx-auto"
+    }
+  },
+  "components": {
+    "buttons": {
+      "primary": "bg-teal-700 text-white hover:bg-teal-800 rounded-full px-8 py-6 text-lg font-medium transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1",
+      "secondary": "bg-white text-teal-900 border border-stone-200 hover:border-teal-700 rounded-full px-8 py-6 text-lg font-medium transition-all duration-300",
+      "ghost": "text-stone-600 hover:text-teal-700 hover:bg-teal-50 rounded-lg px-4 py-2 transition-colors"
+    },
+    "cards": {
+      "base": "bg-white border border-stone-100 rounded-2xl p-8 shadow-sm hover:shadow-md transition-all duration-300",
+      "feature": "bg-stone-50/50 border border-stone-200 rounded-xl p-6 hover:bg-white transition-colors",
+      "glass": "bg-white/70 backdrop-blur-xl border border-white/40 shadow-sm"
+    },
+    "inputs": {
+      "base": "bg-stone-50 border-stone-200 focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 rounded-lg h-12 px-4 transition-all"
+    },
+    "navigation": {
+      "wrapper": "fixed top-0 left-0 right-0 z-50 px-6 py-4",
+      "container": "bg-white/80 backdrop-blur-md border border-white/20 rounded-full shadow-sm px-8 py-3 flex items-center justify-between max-w-5xl mx-auto"
+    }
+  },
+  "visual_assets": {
+    "image_urls": {
+      "hero_bg": "https://images.unsplash.com/photo-1691507000305-c0006a062338?crop=entropy&cs=srgb&fm=jpg&q=85",
+      "conference_speaker": "https://images.unsplash.com/photo-1659353888338-ce940a0f252f?crop=entropy&cs=srgb&fm=jpg&q=85",
+      "doctor_portrait_1": "https://images.unsplash.com/photo-1759350075177-eeb89d507990?crop=entropy&cs=srgb&fm=jpg&q=85",
+      "doctor_portrait_2": "https://images.pexels.com/photos/8313426/pexels-photo-8313426.jpeg",
+      "abstract_texture": "https://images.unsplash.com/photo-1647505195435-76036a0b1d14?crop=entropy&cs=srgb&fm=jpg&q=85",
+      "medical_detail": "https://images.pexels.com/photos/5841947/pexels-photo-5841947.jpeg"
+    },
+    "icons": {
+      "library": "lucide-react",
+      "style": "stroke-width={1.5} className='text-teal-700'"
+    }
+  },
+  "motion": {
+    "transitions": {
+      "default": "transition-all duration-300 ease-out",
+      "slow": "transition-all duration-700 ease-in-out"
+    },
+    "animations": {
+      "fade_in": "animate-in fade-in duration-500",
+      "slide_up": "animate-in slide-in-from-bottom-4 duration-500",
+      "hover_lift": "hover:-translate-y-1 transition-transform duration-300"
+    }
+  },
+  "accessibility": {
+    "contrast_check": "Ensure text meets APCA standards. Use stone-900 on teal-50. Use white on teal-700.",
+    "focus_states": "focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2",
+    "aria": "All interactive elements must have aria-label if no text label is present."
+  },
+  "universal_guidelines": {
+    "do_not": [
+      "Do not use gradients for text.",
+      "Do not use 'Inter' for headings.",
+      "Do not center text by default (use left align for readability).",
+      "Do not use generic stock photos of shaking hands."
+    ],
+    "must_do": [
+      "Use 'data-testid' on all interactive elements.",
+      "Use 'sonner' for toasts.",
+      "Use 'lucide-react' for icons.",
+      "Add micro-interactions to every button and card."
+    ]
+  },
+  "instructions_to_main_agent": "You are building a high-end Medical Association website. It must feel like a mix of a prestigious university and a modern tech company. Use the 'Spectral' font for that academic authority. Use 'Deep Teal' to ground the design in medical trust. Break the grid with the 'Bento' layout for news and events. Do not make it look like a Bootstrap template. Be bold with whitespace."
+}
