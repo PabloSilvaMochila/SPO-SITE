@@ -127,8 +127,15 @@ export default function Layout() {
             <h3 className="font-serif font-bold text-lg text-[#637685]">Sociedade Paraense de Oftalmologia</h3>
             <p className="text-stone-500 text-sm mt-2">Promovendo a saúde ocular no Pará.</p>
           </div>
-          <div className="text-stone-400 text-sm">
-            © {new Date().getFullYear()} S.P.O. Todos os direitos reservados.
+          <div className="text-stone-400 text-sm flex flex-col md:items-end gap-2">
+            <div>© {new Date().getFullYear()} S.P.O. Todos os direitos reservados.</div>
+            <div className="text-xs flex flex-wrap justify-center md:justify-end gap-x-1.5 items-center">
+              <span>Site feito por</span>
+              <a href="https://github.com/marcosmakosu" target="_blank" rel="noreferrer" className="hover:text-primary font-medium transition-colors">Marcos Makosu</a>
+              <span>(<a href="mailto:marcosmakosu@gmail.com" className="hover:text-primary transition-colors">Contato</a>)</span>
+              <span>&</span>
+              <a href="https://github.com/pablosilva" target="_blank" rel="noreferrer" className="hover:text-primary font-medium transition-colors">Pablo Silva</a>
+            </div>
           </div>
         </div>
       </footer>
