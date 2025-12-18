@@ -12,16 +12,14 @@ import uuid
 from datetime import datetime, timedelta, timezone
 from passlib.context import CryptContext
 from jose import JWTError, jwt
-
 from fastapi.staticfiles import StaticFiles
 from fastapi import UploadFile, File
 import shutil
 
-# Setup
+# 1. Setup & Configuration
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
-# Logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
@@ -30,18 +28,18 @@ mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
 
-# Create uploads directory if it doesn't exist
+# Create uploads directory
 os.makedirs(os.path.join(ROOT_DIR, "uploads"), exist_ok=True)
 
 # Auth Config
-SECRET_KEY = os.environ.get("SECRET_KEY", "supersecretkey123") # Change in prod
+SECRET_KEY = os.environ.get("SECRET_KEY", "supersecretkey123")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/login")
 
-# Models
+# 2. Models
 class Token(BaseModel):
     access_token: str
     token_type: str
@@ -77,7 +75,7 @@ class DoctorUpdate(BaseModel):
     contact_info: Optional[str] = None
     image_url: Optional[str] = None
 
-# Auth Helpers
+# 3. Auth Helpers & Dependencies
 def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
 
@@ -113,9 +111,44 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
         raise credentials_exception
     return UserInDB(**user)
 
-# App Init
+# 4. App & Router Initialization
+app = FastAPI()
+
+# Mount uploads directory
+app.mount("/uploads", StaticFiles(directory=os.path.join(ROOT_DIR, "uploads")), name="uploads")
+
+# CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_credentials=True,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+api_router = APIRouter(prefix="/api")
+
+# 5. Routes
+
+# -- Auth --
+@api_router.post("/auth/login", response_model=Token)
+async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
+    user = await db.users.find_one({"username": form_data.username})
+    if not user or not verify_password(form_data.password, user['hashed_password']):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect username or password",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token = create_access_token(
+        data={"sub": user['username']}, expires_delta=access_token_expires
+    )
+    return {"access_token": access_token, "token_type": "bearer"}
+
+# -- Uploads --
 @api_router.post("/upload")
-async def upload_image(file: UploadFile = File(...)):
+async def upload_image(file: UploadFile = File(...), current_user: User = Depends(get_current_user)):
     try:
         # Create unique filename
         ext = os.path.splitext(file.filename)[1]
@@ -133,39 +166,7 @@ async def upload_image(file: UploadFile = File(...)):
         logger.error(f"Upload failed: {str(e)}")
         raise HTTPException(status_code=500, detail="Image upload failed")
 
-app = FastAPI()
-
-# Mount uploads directory
-app.mount("/uploads", StaticFiles(directory=os.path.join(ROOT_DIR, "uploads")), name="uploads")
-
-# CORS
-app.add_middleware(
-    CORSMiddleware,
-    allow_credentials=True,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-api_router = APIRouter(prefix="/api")
-
-# Routes - Auth
-@api_router.post("/auth/login", response_model=Token)
-async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
-    user = await db.users.find_one({"username": form_data.username})
-    if not user or not verify_password(form_data.password, user['hashed_password']):
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Incorrect username or password",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
-    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    access_token = create_access_token(
-        data={"sub": user['username']}, expires_delta=access_token_expires
-    )
-    return {"access_token": access_token, "token_type": "bearer"}
-
-# Routes - Doctors
+# -- Doctors --
 @api_router.get("/doctors", response_model=List[Doctor])
 async def get_doctors(
     city: Optional[str] = None, 
@@ -187,8 +188,7 @@ async def create_doctor(doctor: DoctorCreate, current_user: User = Depends(get_c
     doc_data = doctor.model_dump()
     new_doctor = Doctor(**doc_data)
     doc_dict = new_doctor.model_dump()
-    doc_dict['created_at'] = doc_dict['created_at'].isoformat() # Store as ISO string in Mongo if preferred, or maintain datetime
-    # Let's store as ISO string to be safe with Mongo
+    doc_dict['created_at'] = doc_dict['created_at'].isoformat()
     
     await db.doctors.insert_one(doc_dict)
     return new_doctor
@@ -219,10 +219,9 @@ async def delete_doctor(doctor_id: str, current_user: User = Depends(get_current
         raise HTTPException(status_code=404, detail="Doctor not found")
     return {"message": "Doctor deleted successfully"}
 
-# Include Router
+# 6. Finalize App
 app.include_router(api_router)
 
-# Startup Event to create default admin
 @app.on_event("startup")
 async def startup_db_client():
     # Check if admin exists
