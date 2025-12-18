@@ -60,7 +60,7 @@ export default function Home() {
           <div className="bg-primary text-white rounded-2xl p-8 shadow-sm flex flex-col justify-between h-64 hover:shadow-md transition-all duration-300">
              <div>
                <Users className="w-8 h-8 opacity-80 mb-6" />
-               <h3 className="font-serif text-2xl mb-2">Foco no Paciente</h3>
+               <h3 className="font-serif text-2xl mb-2 text-white">Foco no Paciente</h3>
                <p className="text-primary-100/80">Humanização e tecnologia a serviço da visão.</p>
              </div>
           </div>
