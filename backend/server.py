@@ -13,6 +13,10 @@ from datetime import datetime, timedelta, timezone
 from passlib.context import CryptContext
 from jose import JWTError, jwt
 
+from fastapi.staticfiles import StaticFiles
+from fastapi import UploadFile, File
+import shutil
+
 # Setup
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
@@ -25,6 +29,9 @@ logger = logging.getLogger(__name__)
 mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
+
+# Create uploads directory if it doesn't exist
+os.makedirs(os.path.join(ROOT_DIR, "uploads"), exist_ok=True)
 
 # Auth Config
 SECRET_KEY = os.environ.get("SECRET_KEY", "supersecretkey123") # Change in prod
