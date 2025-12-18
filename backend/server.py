@@ -114,6 +114,25 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
     return UserInDB(**user)
 
 # App Init
+@api_router.post("/upload")
+async def upload_image(file: UploadFile = File(...)):
+    try:
+        # Create unique filename
+        ext = os.path.splitext(file.filename)[1]
+        if not ext:
+            ext = ".jpg" # Default fallback
+        
+        filename = f"{uuid.uuid4()}{ext}"
+        file_path = os.path.join(ROOT_DIR, "uploads", filename)
+        
+        with open(file_path, "wb+") as file_object:
+            shutil.copyfileobj(file.file, file_object)
+            
+        return {"url": f"/uploads/{filename}"}
+    except Exception as e:
+        logger.error(f"Upload failed: {str(e)}")
+        raise HTTPException(status_code=500, detail="Image upload failed")
+
 app = FastAPI()
 
 # Mount uploads directory
