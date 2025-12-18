@@ -26,14 +26,14 @@ export default function About() {
         </div>
         <div className="grid grid-cols-2 gap-4">
            <img 
-             src="https://images.unsplash.com/photo-1579684385180-1ea55f6196e0?auto=format&fit=crop&q=80&w=600" 
+             src="https://images.unsplash.com/photo-1583912267655-731b54a2a4b0?auto=format&fit=crop&q=80&w=600" 
              className="rounded-2xl shadow-lg w-full h-64 object-cover -translate-y-4" 
-             alt="Oftalmologista examinando"
+             alt="Equipamento oftalmológico moderno"
            />
            <img 
-             src="https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&q=80&w=600" 
+             src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&q=80&w=600" 
              className="rounded-2xl shadow-lg w-full h-64 object-cover translate-y-4" 
-             alt="Consultório moderno"
+             alt="Atendimento humanizado"
            />
         </div>
       </div>
