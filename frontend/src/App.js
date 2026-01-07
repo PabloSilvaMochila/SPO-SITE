@@ -30,6 +30,7 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="about" element={<About />} />
+            <Route path="events" element={<Events />} />
             <Route path="directory" element={<Directory />} />
             <Route path="join" element={<Join />} />
             <Route path="login" element={<Login />} />
