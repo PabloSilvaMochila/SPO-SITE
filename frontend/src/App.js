@@ -9,6 +9,8 @@ import About from "./pages/About";
 import Join from "./pages/Join";
 import { useEffect } from "react";
 
+import Events from "./pages/Events";
+
 function ScrollToTop() {
   const { pathname } = useLocation();
 
