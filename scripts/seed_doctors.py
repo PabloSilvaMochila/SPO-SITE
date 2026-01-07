@@ -8,7 +8,7 @@ from datetime import datetime
 sys.path.append("/app/backend")
 
 from server import DoctorModel, EventModel, AsyncSessionLocal, engine
-from sqlalchemy import delete
+from sqlalchemy import text
 
 doctors_data = [
     {
@@ -56,7 +56,8 @@ events_data = [
         "location": "Hangar Centro de Convenções, Belém",
         "description": "O maior evento da oftalmologia no norte do país. Três dias de imersão científica, workshops práticos e networking com grandes nomes nacionais.",
         "image_url": "https://images.unsplash.com/photo-1544531586-fde5298cdd40?auto=format&fit=crop&q=80&w=800",
-        "status": "Inscrições Abertas"
+        "status": "Inscrições Abertas",
+        "external_link": "https://example.com/congresso"
     },
     {
         "title": "Curso Avançado de Retina e Vítreo",
@@ -65,7 +66,8 @@ events_data = [
         "location": "Auditório da S.P.O.",
         "description": "Curso teórico-prático focado nas novas tecnologias de diagnóstico e tratamento de doenças retinianas. Vagas limitadas.",
         "image_url": "https://images.unsplash.com/photo-1576091160550-2187d80a18f7?auto=format&fit=crop&q=80&w=800",
-        "status": "Poucas Vagas"
+        "status": "Poucas Vagas",
+        "external_link": "https://example.com/curso-retina"
     },
     {
         "title": "Mutirão de Prevenção ao Glaucoma",
@@ -74,24 +76,22 @@ events_data = [
         "location": "Praça da República",
         "description": "Ação social aberta ao público para aferição de pressão intraocular e triagem de glaucoma. Participe como voluntário.",
         "image_url": "https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&q=80&w=800",
-        "status": "Gratuito"
+        "status": "Gratuito",
+        "external_link": ""
     }
 ]
 
 async def seed():
-    print("Starting seed...")
+    print("Starting seed (Dropping tables to update schema)...")
     
-    # Create tables if they don't exist
+    # We need to drop tables to ensure schema update since we added a column
     async with engine.begin() as conn:
+        await conn.run_sync(EventModel.metadata.drop_all)
+        await conn.run_sync(DoctorModel.metadata.drop_all)
         await conn.run_sync(EventModel.metadata.create_all)
         await conn.run_sync(DoctorModel.metadata.create_all)
 
     async with AsyncSessionLocal() as session:
-        # Clear existing
-        print("Clearing existing data...")
-        await session.execute(delete(DoctorModel))
-        await session.execute(delete(EventModel))
-        
         # Insert doctors
         print("Inserting doctors...")
         for doc in doctors_data:
@@ -118,6 +118,7 @@ async def seed():
                 description=evt["description"],
                 image_url=evt["image_url"],
                 status=evt["status"],
+                external_link=evt["external_link"],
                 created_at=datetime.utcnow()
             )
             session.add(new_evt)
