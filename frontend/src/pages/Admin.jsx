@@ -137,7 +137,7 @@ export default function Admin() {
     if (activeTab === "doctors") {
       setFormData({ name: "", specialty: "", city: "", contact_info: "", image_url: "" });
     } else {
-      setFormData({ title: "", date: "", time: "", location: "", description: "", status: "Inscrições Abertas", image_url: "" });
+      setFormData({ title: "", date: "", time: "", location: "", description: "", status: "Inscrições Abertas", image_url: "", external_link: "" });
     }
     setImageMode("upload");
     setSelectedFile(null);
