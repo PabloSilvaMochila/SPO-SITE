@@ -115,9 +115,18 @@ function EventCard({ event }) {
             {event.location}
           </div>
           
-          <button className="flex items-center gap-2 text-primary font-bold hover:text-accent transition-colors group/btn">
-            Saiba Mais <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
-          </button>
+          {event.external_link ? (
+            <a 
+              href={event.external_link} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-primary font-bold hover:text-accent transition-colors group/btn"
+            >
+              Saiba Mais <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
+            </a>
+          ) : (
+            <span className="text-stone-400 text-sm font-medium">Mais detalhes em breve</span>
+          )}
         </div>
       </div>
     </div>
