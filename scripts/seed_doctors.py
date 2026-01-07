@@ -1,14 +1,14 @@
 import asyncio
 import sys
 import os
+import uuid
+from datetime import datetime
 
 # Ensure backend path is in sys.path
 sys.path.append("/app/backend")
 
-# Now we can import from server
-# We need to make sure we don't trigger the whole app startup if possible, 
-# but server.py does `app = FastAPI()` at module level. That's fine.
-from server import DoctorModel, AsyncSessionLocal, engine
+from server import DoctorModel, EventModel, AsyncSessionLocal, engine
+from sqlalchemy import delete
 
 doctors_data = [
     {
@@ -48,27 +48,82 @@ doctors_data = [
     }
 ]
 
+events_data = [
+    {
+        "title": "V Congresso Paraense de Oftalmologia",
+        "date": "15-17 de Outubro, 2025",
+        "time": "08:00 - 18:00",
+        "location": "Hangar Centro de Convenções, Belém",
+        "description": "O maior evento da oftalmologia no norte do país. Três dias de imersão científica, workshops práticos e networking com grandes nomes nacionais.",
+        "image_url": "https://images.unsplash.com/photo-1544531586-fde5298cdd40?auto=format&fit=crop&q=80&w=800",
+        "status": "Inscrições Abertas"
+    },
+    {
+        "title": "Curso Avançado de Retina e Vítreo",
+        "date": "22 de Novembro, 2025",
+        "time": "09:00 - 17:00",
+        "location": "Auditório da S.P.O.",
+        "description": "Curso teórico-prático focado nas novas tecnologias de diagnóstico e tratamento de doenças retinianas. Vagas limitadas.",
+        "image_url": "https://images.unsplash.com/photo-1576091160550-2187d80a18f7?auto=format&fit=crop&q=80&w=800",
+        "status": "Poucas Vagas"
+    },
+    {
+        "title": "Mutirão de Prevenção ao Glaucoma",
+        "date": "05 de Dezembro, 2025",
+        "time": "08:00 - 14:00",
+        "location": "Praça da República",
+        "description": "Ação social aberta ao público para aferição de pressão intraocular e triagem de glaucoma. Participe como voluntário.",
+        "image_url": "https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&q=80&w=800",
+        "status": "Gratuito"
+    }
+]
+
 async def seed():
-    print("Seeding doctors...")
+    print("Starting seed...")
+    
+    # Create tables if they don't exist
+    async with engine.begin() as conn:
+        await conn.run_sync(EventModel.metadata.create_all)
+        await conn.run_sync(DoctorModel.metadata.create_all)
+
     async with AsyncSessionLocal() as session:
-        # Check if we already have doctors
-        # Note: In a real script we might want to truncate, but here let's just add if empty or append
-        # Let's clean up for demo purposes
-        from sqlalchemy import delete
+        # Clear existing
+        print("Clearing existing data...")
         await session.execute(delete(DoctorModel))
+        await session.execute(delete(EventModel))
         
+        # Insert doctors
+        print("Inserting doctors...")
         for doc in doctors_data:
             new_doc = DoctorModel(
+                id=str(uuid.uuid4()),
                 name=doc["name"],
                 city=doc["city"],
                 specialty=doc["specialty"],
                 contact_info=doc["contact_info"],
-                image_url=doc["image_url"]
+                image_url=doc["image_url"],
+                created_at=datetime.utcnow()
             )
             session.add(new_doc)
+
+        # Insert events
+        print("Inserting events...")
+        for evt in events_data:
+            new_evt = EventModel(
+                id=str(uuid.uuid4()),
+                title=evt["title"],
+                date=evt["date"],
+                time=evt["time"],
+                location=evt["location"],
+                description=evt["description"],
+                image_url=evt["image_url"],
+                status=evt["status"],
+                created_at=datetime.utcnow()
+            )
+            session.add(new_evt)
         
         await session.commit()
-    print("Seed complete.")
+    print("Seed complete!")
 
 if __name__ == "__main__":
     asyncio.run(seed())
