@@ -25,6 +25,17 @@ export default function Home() {
             >
               Encontrar um Médico <ArrowRight className="w-5 h-5" />
             </Link>
+            
+            {/* Instagram Social Link */}
+            <a 
+              href="https://instagram.com/instagram" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="bg-white/10 backdrop-blur-md text-white border border-white/20 hover:bg-white/20 rounded-full px-8 py-4 text-lg font-medium transition-all duration-300 shadow-lg flex items-center gap-2"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-instagram"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+              Siga-nos
+            </a>
           </div>
         </div>
       </section>
