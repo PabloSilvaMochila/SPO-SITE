@@ -34,13 +34,13 @@ export default function Home() {
                  <Instagram className="w-6 h-6 text-white" />
                </div>
                <a 
-                 href="https://instagram.com/instagram" 
+                 href="https://www.instagram.com/spo.ofc" 
                  target="_blank" 
                  rel="noopener noreferrer"
                  className="flex flex-col"
                >
                  <span className="text-xs text-primary-200 font-medium uppercase tracking-wider">Siga-nos</span>
-                 <span className="text-white font-bold text-lg">@instagram</span>
+                 <span className="text-white font-bold text-lg">@spo.ofc</span>
                </a>
             </div>
           </div>
