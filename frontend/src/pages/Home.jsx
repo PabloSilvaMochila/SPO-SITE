@@ -1,4 +1,4 @@
-import { ArrowRight, Activity, Users, ShieldCheck, Eye, Instagram } from "lucide-react";
+import { ArrowRight, Activity, Users, ShieldCheck, Eye, Instagram, Quote } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function Home() {
@@ -21,11 +21,11 @@ export default function Home() {
           {/* CTA + Social Box */}
           <div className="flex flex-wrap items-center gap-6">
             <Link 
-              to="/directory" 
+              to="/join" 
               className="bg-white text-primary-900 hover:bg-stone-100 rounded-full px-8 py-4 text-lg font-medium transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 flex items-center gap-2"
-              data-testid="hero-cta-directory"
+              data-testid="hero-cta-join"
             >
-              Encontrar um Médico <ArrowRight className="w-5 h-5" />
+              Seja um Associado <ArrowRight className="w-5 h-5" />
             </Link>
 
             {/* Social Media Highlight Box */}
@@ -42,6 +42,51 @@ export default function Home() {
                  <span className="text-xs text-primary-200 font-medium uppercase tracking-wider">Siga-nos</span>
                  <span className="text-white font-bold text-lg">@spo.ofc</span>
                </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* President's Message (Moved from About) */}
+      <section className="bg-stone-50 rounded-3xl p-8 md:p-12 border border-stone-100">
+        <div className="flex flex-col md:flex-row gap-10 items-start">
+          <div className="md:w-1/3 flex flex-col items-center text-center space-y-4">
+            <div className="relative">
+              <div className="absolute inset-0 bg-primary/10 rounded-full translate-x-2 translate-y-2"></div>
+              <img 
+                src="https://customer-assets.emergentagent.com/job_6e125dd0-724d-42ad-90c4-2b3d56d9357e/artifacts/ymnppwu0_image.png" 
+                alt="Presidente da SPO" 
+                className="w-48 h-48 md:w-56 md:h-56 rounded-full object-cover shadow-lg relative z-10 border-4 border-white"
+              />
+            </div>
+            <div>
+              <h3 className="font-serif text-xl font-bold text-primary-900">Dr. Presidente da SPO</h3>
+              <span className="text-sm text-stone-500 font-medium uppercase tracking-wider">Gestão 2025-2026</span>
+            </div>
+          </div>
+          
+          <div className="md:w-2/3 space-y-6">
+            <div className="flex items-center gap-3 mb-2">
+              <Quote className="w-8 h-8 text-primary/20 rotate-180" />
+              <h2 className="font-serif text-3xl text-primary-900">Palavra do Presidente</h2>
+            </div>
+            
+            <div className="space-y-4 text-stone-600 leading-relaxed text-justify">
+              <p>
+                A Sociedade Paraense de Oftalmologia tem como missão promover a excelência no cuidado com a saúde ocular, fortalecendo a prática médica ética, científica e humanizada em nosso estado.
+              </p>
+              <p>
+                Vivemos um momento de constante evolução da Oftalmologia, com avanços tecnológicos, científicos e educacionais que exigem atualização permanente e compromisso coletivo. Nesse cenário, a SPO reafirma seu papel como espaço de integração, aprendizado contínuo e valorização do oftalmologista, estimulando a troca de experiências, o aprimoramento profissional e a difusão do conhecimento de qualidade.
+              </p>
+              <p>
+                Nossa atuação vai além da formação científica. Buscamos também contribuir ativamente com a sociedade, por meio de campanhas de prevenção, ações educativas e parcerias institucionais que ampliem o acesso à informação e ao cuidado visual, sempre com responsabilidade social e respeito às necessidades da população paraense.
+              </p>
+              <p>
+                Acreditamos que o fortalecimento da Oftalmologia no Pará passa pela união da classe, pelo incentivo à pesquisa, pelo apoio às novas gerações de especialistas e pela construção de uma Sociedade cada vez mais participativa, moderna e comprometida com o futuro.
+              </p>
+              <p className="font-medium text-primary-900">
+                Convido todos os colegas a participarem ativamente das iniciativas da SPO, compartilhando saberes, experiências e projetos. Juntos, seguimos trabalhando para elevar o padrão da Oftalmologia em nosso estado e contribuir para uma melhor qualidade de vida por meio da visão.
+              </p>
             </div>
           </div>
         </div>
