@@ -12,6 +12,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from jose import JWTError, jwt
 from passlib.context import CryptContext
 from pydantic import BaseModel, ConfigDict
@@ -27,6 +28,7 @@ from slowapi.middleware import SlowAPIMiddleware
 
 # --- 1. CONFIGURATION ---
 ROOT_DIR = Path(__file__).parent
+# Try to load .env, but don't fail if missing (Docker env vars take precedence)
 load_dotenv(ROOT_DIR / '.env')
 
 logging.basicConfig(level=logging.INFO)
@@ -46,6 +48,7 @@ UPLOAD_DIR = os.path.join(ROOT_DIR, "uploads")
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 # Database
+# In Docker, we might want to map this to a volume
 DB_PATH = os.path.join(ROOT_DIR, "medassoc.db")
 DATABASE_URL = f"sqlite+aiosqlite:///{DB_PATH}"
 
@@ -185,9 +188,10 @@ app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 app.add_middleware(SlowAPIMiddleware)
 
 # Trusted Hosts
+# Allow all in production typically behind Nginx/Traefik, or specify exact domains
 app.add_middleware(
     TrustedHostMiddleware, 
-    allowed_hosts=["localhost", "127.0.0.1", "*.emergentagent.com", "*.emergent.sh", "medassoc-directory.preview.emergentagent.com"]
+    allowed_hosts=["*"] # Managed by Nginx/Firewall in prod usually
 )
 
 # CORS
@@ -201,18 +205,7 @@ app.add_middleware(
     allow_headers=["Authorization", "Content-Type"],
 )
 
-# Static Files
-app.mount("/uploads", StaticFiles(directory=UPLOAD_DIR), name="uploads")
-
-# Security Headers
-@app.middleware("http")
-async def security_headers(request: Request, call_next):
-    response = await call_next(request)
-    response.headers["X-Content-Type-Options"] = "nosniff"
-    response.headers["X-Frame-Options"] = "DENY"
-    response.headers["X-XSS-Protection"] = "1; mode=block"
-    return response
-
+# API Router
 api_router = APIRouter(prefix="/api")
 
 # --- 6. ENDPOINTS ---
@@ -375,8 +368,42 @@ async def delete_event(
     await db.commit()
     return {"message": "Deleted"}
 
+# Include API Router
 app.include_router(api_router)
 
+# Mount Uploads (Before catch-all)
+app.mount("/uploads", StaticFiles(directory=UPLOAD_DIR), name="uploads")
+
+# --- 7. STATIC FILES (Frontend Serving) ---
+# IMPORTANT: This allows us to serve the React app from FastAPI directly
+# Simplifies deployment on VPS (Single port to expose)
+
+FRONTEND_BUILD_DIR = Path("/app/frontend/build") # Docker path
+LOCAL_BUILD_DIR = ROOT_DIR.parent / "frontend" / "build" # Local path
+
+# Determine which build dir exists
+BUILD_DIR = FRONTEND_BUILD_DIR if FRONTEND_BUILD_DIR.exists() else LOCAL_BUILD_DIR
+
+if BUILD_DIR.exists():
+    app.mount("/static", StaticFiles(directory=BUILD_DIR / "static"), name="static")
+    
+    # Catch-all route for SPA (React Router)
+    @app.get("/{full_path:path}")
+    async def serve_react_app(full_path: str):
+        # Allow API calls to pass through
+        if full_path.startswith("api/") or full_path.startswith("uploads/"):
+            raise HTTPException(status_code=404, detail="Not Found")
+            
+        file_path = BUILD_DIR / full_path
+        if file_path.exists() and file_path.is_file():
+            return FileResponse(file_path)
+            
+        # Default to index.html for SPA routing
+        return FileResponse(BUILD_DIR / "index.html")
+else:
+    logger.warning("⚠️ Frontend build directory not found. Run 'yarn build' in frontend.")
+
+# Startup
 @app.on_event("startup")
 async def on_startup():
     async with engine.begin() as conn:
