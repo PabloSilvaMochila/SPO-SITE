@@ -60,7 +60,7 @@ export default function Home() {
               />
             </div>
             <div>
-              <h3 className="font-serif text-xl font-bold text-primary-900">Dr. Presidente da SPO</h3>
+              <h3 className="font-serif text-xl font-bold text-primary-900">Dr. Robson Seiji T. Koyama</h3>
               <span className="text-sm text-stone-500 font-medium uppercase tracking-wider">Gestão 2025-2026</span>
             </div>
           </div>
