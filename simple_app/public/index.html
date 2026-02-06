@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S.P.O. - Sociedade Paraense de Oftalmologia</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Lucide Icons (Script) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container nav-content">
+            <div class="logo">
+                <img src="https://customer-assets.emergentagent.com/job_6e125dd0-724d-42ad-90c4-2b3d56d9357e/artifacts/t3f91lft_corte-removebg-preview.png" alt="SPO">
+                <div class="logo-text">
+                    <span>Sociedade Paraense</span>
+                    <span>de Oftalmologia</span>
+                </div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home" onclick="router('home')">Início</a></li>
+                <li><a href="#about" onclick="router('about')">Sobre</a></li>
+                <li><a href="#events" onclick="router('events')">Eventos</a></li>
+                <li><a href="#directory" onclick="router('directory')">Diretório</a></li>
+                <li><a href="#join" onclick="router('join')" class="btn-join">Se Associe</a></li>
+                <li><a href="#admin" onclick="router('admin')" class="icon-link"><i data-lucide="user-cog"></i></a></li>
+            </ul>
+            <div class="mobile-toggle" onclick="toggleMenu()">
+                <i data-lucide="menu"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="app">
+        <!-- Content injected by JS -->
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-info">
+                <h3>Sociedade Paraense de Oftalmologia</h3>
+                <p>Promovendo a saúde ocular no Pará.</p>
+            </div>
+            <div class="footer-credits">
+                <p>© 2025 S.P.O. Todos os direitos reservados.</p>
+                <div class="credits-links">
+                    Feito por 
+                    <a href="mailto:marcosmakosu@gmail.com">Marcos Makosu</a>, 
+                    <a href="mailto:ph501010c@gmail.com">Pablo Silva</a> & 
+                    <a href="mailto:agenciaquasarmedia@gmail.com">Agencia Quasar Midia</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
