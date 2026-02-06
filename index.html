@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S.P.O. - Sociedade Paraense de Oftalmologia</title>
+    
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&family=Spectral:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Manrope', 'sans-serif'],
+                        serif: ['Spectral', 'serif'],
+                    },
+                    colors: {
+                        primary: {
+                            DEFAULT: '#2A4E73',
+                            50: '#f0f7ff',
+                            900: '#1e3a56'
+                        },
+                        accent: '#EA580C'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans pt-24">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-md border-b border-slate-200 z-50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="#home" onclick="navigate('home')" class="flex items-center gap-4 group">
+                <img src="https://customer-assets.emergentagent.com/job_6e125dd0-724d-42ad-90c4-2b3d56d9357e/artifacts/t3f91lft_corte-removebg-preview.png" 
+                     alt="SPO Logo" 
+                     class="h-16 w-auto transition-transform group-hover:scale-105">
+                <div class="hidden md:flex flex-col justify-center">
+                    <span class="font-serif font-bold text-lg text-slate-600 leading-none">Sociedade Paraense</span>
+                    <span class="font-serif font-bold text-lg text-slate-600 leading-none">de Oftalmologia</span>
+                </div>
+            </a>
+
+            <!-- Desktop Links -->
+            <div class="hidden md:flex items-center gap-6">
+                <a href="#home" onclick="navigate('home')" class="text-slate-500 hover:text-primary font-medium transition-colors">Início</a>
+                <a href="#about" onclick="navigate('about')" class="text-slate-500 hover:text-primary font-medium transition-colors">Sobre</a>
+                <a href="#events" onclick="navigate('events')" class="text-slate-500 hover:text-primary font-medium transition-colors">Eventos</a>
+                <a href="#directory" onclick="navigate('directory')" class="text-slate-500 hover:text-primary font-medium transition-colors">Diretório</a>
+                <a href="#join" onclick="navigate('join')" class="px-5 py-2.5 rounded-lg border border-primary text-primary hover:bg-primary/5 font-medium transition-all">Se Associe</a>
+                <a href="#admin" onclick="navigate('admin')" class="p-2 text-slate-400 hover:text-primary transition-colors"><i data-lucide="user-cog"></i></a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button onclick="toggleMenu()" class="md:hidden p-2 text-slate-600">
+                <i data-lucide="menu" class="w-8 h-8"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden absolute top-24 left-0 w-full bg-white border-b border-slate-200 p-4 shadow-xl md:hidden flex-col gap-2">
+            <a href="#home" onclick="navigate('home')" class="block p-4 text-lg font-medium text-slate-600 hover:bg-slate-50 rounded-lg">Início</a>
+            <a href="#directory" onclick="navigate('directory')" class="block p-4 text-lg font-medium text-slate-600 hover:bg-slate-50 rounded-lg">Diretório</a>
+            <a href="#events" onclick="navigate('events')" class="block p-4 text-lg font-medium text-slate-600 hover:bg-slate-50 rounded-lg">Eventos</a>
+            <a href="#admin" onclick="navigate('admin')" class="block p-4 text-lg font-medium text-slate-600 hover:bg-slate-50 rounded-lg flex items-center gap-2"><i data-lucide="user-cog"></i> Admin</a>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main id="app" class="min-h-screen"></main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-12 mt-20">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="text-center md:text-left">
+                <h3 class="font-serif font-bold text-lg text-slate-600">Sociedade Paraense de Oftalmologia</h3>
+                <p class="text-slate-500 text-sm mt-2">Promovendo a saúde ocular no Pará.</p>
+            </div>
+            <div class="text-slate-400 text-sm flex flex-col items-center md:items-end gap-2">
+                <p>© 2025 S.P.O. Todos os direitos reservados.</p>
+                <div class="flex flex-wrap justify-center gap-1.5 items-center text-xs">
+                    <span>Feito por</span>
+                    <a href="mailto:marcosmakosu@gmail.com" class="hover:text-primary font-bold">Marcos Makosu</a>,
+                    <a href="mailto:ph501010c@gmail.com" class="hover:text-primary font-bold">Pablo Silva</a> &
+                    <a href="mailto:agenciaquasarmedia@gmail.com" class="hover:text-primary font-bold">Agencia Quasar Midia</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Javascript Logic -->
+    <script src="app.js"></script>
+</body>
+</html>
