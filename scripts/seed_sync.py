@@ -19,6 +19,13 @@ doctors_data = [
         "specialty": "Diretoria da SPO",
         "contact_info": "",
         "image_url": "https://customer-assets.emergentagent.com/job_spo-medical/artifacts/gsh1x86w_image.png"
+    },
+    {
+        "name": "Alexandre Antônio Marques Rosa",
+        "city": "Belém",
+        "specialty": "Vice -presidente",
+        "contact_info": "",
+        "image_url": "https://customer-assets.emergentagent.com/job_spo-medical/artifacts/zqgc9gb2_WhatsApp%20Image%202025-12-23%20at%2013.23.32%20%281%29.jpeg"
     }
 ]
 
