@@ -146,7 +146,7 @@ class MedicalAssociationAPITester:
             "Create Doctor",
             "POST",
             "api/doctors",
-            200,  # Backend returns 200 instead of 201
+            201,  # Backend should return 201 for creation
             data=doctor_data
         )
         
