@@ -1,5 +1,4 @@
 # ===============================
-# Build Frontend
 # Stage 1: Build Frontend
 # ===============================
 FROM node:18-alpine AS frontend-build
@@ -14,7 +13,6 @@ ENV REACT_APP_BACKEND_URL=/api
 RUN npm run build
 
 # ===============================
-# Backend
 # Stage 2: Backend (Final Image)
 # ===============================
 FROM python:3.11-slim
@@ -27,10 +25,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY scripts/ ./scripts
 
-# Frontend buildado
+# Copia o frontend buildado
 COPY --from=frontend-build /app/frontend/build ./frontend/build
 
-# Ambiente
 ENV PYTHONPATH=/app
 ENV SECRET_KEY=changeme_in_production
 ENV PORT=10000
