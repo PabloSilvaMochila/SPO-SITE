@@ -1,10 +1,29 @@
-import { Mail, Phone, CheckCircle, FileText, Send } from "lucide-react";
+import { Phone, CheckCircle, Send } from "lucide-react";
 import { toast } from "sonner";
+import { useState } from "react";
 
 export default function Join() {
+  const [formData, setFormData] = useState({
+    name: "",
+    crm: "",
+    email: "",
+    phone: "",
+    message: ""
+  });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    toast.success("Solicitação enviada! Entraremos em contato em breve.");
+    
+    const text = `Olá, gostaria de solicitar filiação à SPO.%0A%0A*Nome:* ${formData.name}%0A*CRM:* ${formData.crm}%0A*Email:* ${formData.email}%0A*Telefone:* ${formData.phone}%0A*Mensagem:* ${formData.message}`;
+    
+    const whatsappUrl = `https://wa.me/559191222234?text=${text}`;
+    
+    window.open(whatsappUrl, '_blank');
+    toast.success("Redirecionando para o WhatsApp...");
   };
 
   return (
@@ -40,9 +59,6 @@ export default function Join() {
             </p>
             <div className="space-y-2 text-sm font-medium text-stone-800">
               <div className="flex items-center gap-2">
-                <Mail className="w-4 h-4 text-primary" /> secretaria@spo.com.br
-              </div>
-              <div className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-primary" /> +55 91 9122-2234
               </div>
             </div>
@@ -57,32 +73,70 @@ export default function Join() {
               <div className="grid md:grid-cols-2 gap-5">
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-stone-700">Nome Completo</label>
-                  <input type="text" required className="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none" placeholder="Dr. Nome Sobrenome" />
+                  <input 
+                    type="text" 
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required 
+                    className="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none" 
+                    placeholder="Dr. Nome Sobrenome" 
+                  />
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-stone-700">CRM / UF</label>
-                  <input type="text" required className="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none" placeholder="0000 PA" />
+                  <input 
+                    type="text" 
+                    name="crm"
+                    value={formData.crm}
+                    onChange={handleChange}
+                    required 
+                    className="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none" 
+                    placeholder="0000 PA" 
+                  />
                 </div>
               </div>
 
               <div className="grid md:grid-cols-2 gap-5">
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-stone-700">E-mail</label>
-                  <input type="email" required className="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none" placeholder="medico@email.com" />
+                  <input 
+                    type="email" 
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required 
+                    className="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none" 
+                    placeholder="medico@email.com" 
+                  />
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-stone-700">Telefone / WhatsApp</label>
-                  <input type="tel" required className="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none" placeholder="(91) 90000-0000" />
+                  <input 
+                    type="tel" 
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    required 
+                    className="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none" 
+                    placeholder="(91) 90000-0000" 
+                  />
                 </div>
               </div>
 
               <div className="space-y-2">
                 <label className="text-sm font-medium text-stone-700">Mensagem (Opcional)</label>
-                <textarea className="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none min-h-[120px]" placeholder="Gostaria de saber mais sobre..." />
+                <textarea 
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none min-h-[120px]" 
+                  placeholder="Gostaria de saber mais sobre..." 
+                />
               </div>
 
-              <button type="submit" className="w-full bg-primary text-white py-4 rounded-xl font-bold text-lg hover:bg-primary-800 transition-colors flex items-center justify-center gap-2 shadow-lg hover:shadow-xl hover:-translate-y-1 duration-300">
-                Enviar Solicitação <Send className="w-5 h-5" />
+              <button type="submit" className="w-full bg-[#25D366] text-white py-4 rounded-xl font-bold text-lg hover:bg-[#128C7E] transition-colors flex items-center justify-center gap-2 shadow-lg hover:shadow-xl hover:-translate-y-1 duration-300">
+                Enviar via WhatsApp <Send className="w-5 h-5" />
               </button>
             </form>
           </div>
