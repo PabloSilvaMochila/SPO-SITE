@@ -61,6 +61,13 @@ doctors_data = [
         "specialty": "Diretoria SPO",
         "contact_info": "",
         "image_url": "https://customer-assets.emergentagent.com/job_spo-medical/artifacts/zs19ws0p_WhatsApp%20Image%202025-12-23%20at%2013.47.04.jpeg"
+    },
+    {
+        "name": "Etiene França",
+        "city": "Belém",
+        "specialty": "Diretora de Marketing SPO",
+        "contact_info": "",
+        "image_url": "https://customer-assets.emergentagent.com/job_spo-medical/artifacts/k09l61li_teste1.jpeg"
     }
 ]
 
