@@ -7,6 +7,13 @@ DB_PATH = "/app/backend/medassoc.db"
 # Single real doctor
 doctors_data = [
     {
+        "name": "Robson Seiji T. Koyama",
+        "city": "Belém",
+        "specialty": "Presidente",
+        "contact_info": "",
+        "image_url": "https://customer-assets.emergentagent.com/job_spo-medical/artifacts/vp67eno7_WhatsApp%20Image%202026-01-22%20at%2009.35.13.jpeg"
+    },
+    {
         "name": "Filipe Moreira de Araújo",
         "city": "Belém",
         "specialty": "Conselheiro Fiscal Suplente",
