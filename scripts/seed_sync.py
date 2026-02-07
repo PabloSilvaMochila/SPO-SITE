@@ -26,6 +26,13 @@ doctors_data = [
         "specialty": "Vice -presidente",
         "contact_info": "",
         "image_url": "https://customer-assets.emergentagent.com/job_spo-medical/artifacts/zqgc9gb2_WhatsApp%20Image%202025-12-23%20at%2013.23.32%20%281%29.jpeg"
+    },
+    {
+        "name": "José Ricardo Mouta Araújo",
+        "city": "Belém",
+        "specialty": "Membro",
+        "contact_info": "",
+        "image_url": "https://customer-assets.emergentagent.com/job_spo-medical/artifacts/86mvenb5_WhatsApp%20Image%202025-12-23%20at%2013.23.32%20%282%29.jpeg"
     }
 ]
 
