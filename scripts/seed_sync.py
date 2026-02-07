@@ -1,0 +1,146 @@
+import sqlite3
+import uuid
+import datetime
+
+DB_PATH = "/app/backend/medassoc.db"
+
+doctors_data = [
+    {
+        "name": "Dr. Carlos Mendes",
+        "city": "Belém",
+        "specialty": "Cirurgia de Catarata",
+        "contact_info": "(91) 3222-1234",
+        "image_url": "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=800"
+    },
+    {
+        "name": "Dra. Ana Paula Souza",
+        "city": "Ananindeua",
+        "specialty": "Oftalmopediatria",
+        "contact_info": "(91) 3255-5678",
+        "image_url": "https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&q=80&w=800"
+    },
+    {
+        "name": "Dr. Roberto Silva",
+        "city": "Santarém",
+        "specialty": "Retina e Vítreo",
+        "contact_info": "(93) 3522-9090",
+        "image_url": "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&q=80&w=800"
+    },
+    {
+        "name": "Dra. Maria Fernanda",
+        "city": "Belém",
+        "specialty": "Glaucoma",
+        "contact_info": "(91) 98888-7777",
+        "image_url": "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=800"
+    },
+    {
+        "name": "Dr. João Pedro Oliveira",
+        "city": "Marabá",
+        "specialty": "Córnea e Lentes de Contato",
+        "contact_info": "(94) 3322-4455",
+        "image_url": "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=800"
+    }
+]
+
+events_data = [
+    {
+        "title": "V Congresso Paraense de Oftalmologia",
+        "date": "15-17 de Outubro, 2025",
+        "time": "08:00 - 18:00",
+        "location": "Hangar Centro de Convenções, Belém",
+        "description": "O maior evento da oftalmologia no norte do país. Três dias de imersão científica, workshops práticos e networking com grandes nomes nacionais.",
+        "image_url": "https://images.unsplash.com/photo-1544531586-fde5298cdd40?auto=format&fit=crop&q=80&w=800",
+        "status": "Inscrições Abertas",
+        "external_link": "https://example.com/congresso"
+    },
+    {
+        "title": "Curso Avançado de Retina e Vítreo",
+        "date": "22 de Novembro, 2025",
+        "time": "09:00 - 17:00",
+        "location": "Auditório da S.P.O.",
+        "description": "Curso teórico-prático focado nas novas tecnologias de diagnóstico e tratamento de doenças retinianas. Vagas limitadas.",
+        "image_url": "https://images.unsplash.com/photo-1576091160550-2187d80a18f7?auto=format&fit=crop&q=80&w=800",
+        "status": "Poucas Vagas",
+        "external_link": "https://example.com/curso-retina"
+    },
+    {
+        "title": "Mutirão de Prevenção ao Glaucoma",
+        "date": "05 de Dezembro, 2025",
+        "time": "08:00 - 14:00",
+        "location": "Praça da República",
+        "description": "Ação social aberta ao público para aferição de pressão intraocular e triagem de glaucoma. Participe como voluntário.",
+        "image_url": "https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&q=80&w=800",
+        "status": "Gratuito",
+        "external_link": ""
+    }
+]
+
+def seed():
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+
+    # Create Tables
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS users (
+            id TEXT PRIMARY KEY,
+            username TEXT UNIQUE,
+            full_name TEXT,
+            hashed_password TEXT,
+            disabled BOOLEAN
+        )
+    ''')
+    
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS doctors (
+            id TEXT PRIMARY KEY,
+            name TEXT,
+            city TEXT,
+            specialty TEXT,
+            contact_info TEXT,
+            image_url TEXT,
+            created_at TIMESTAMP
+        )
+    ''')
+    
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS events (
+            id TEXT PRIMARY KEY,
+            title TEXT,
+            date TEXT,
+            time TEXT,
+            location TEXT,
+            description TEXT,
+            image_url TEXT,
+            status TEXT,
+            external_link TEXT,
+            created_at TIMESTAMP
+        )
+    ''')
+
+    # Admin User (hash for 'admin123')
+    # Using a fixed hash for simplicity/demo purposes (bcrypt)
+    # This hash is for 'admin123'
+    admin_hash = "$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW"
+    
+    try:
+        cursor.execute("INSERT OR IGNORE INTO users (id, username, full_name, hashed_password, disabled) VALUES (?, ?, ?, ?, ?)",
+                       (str(uuid.uuid4()), "admin@medassoc.com", "Admin", admin_hash, False))
+    except Exception as e:
+        print(f"Error inserting admin: {e}")
+
+    # Seed Doctors
+    for doc in doctors_data:
+        cursor.execute("INSERT INTO doctors (id, name, city, specialty, contact_info, image_url, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                       (str(uuid.uuid4()), doc["name"], doc["city"], doc["specialty"], doc["contact_info"], doc["image_url"], datetime.datetime.utcnow()))
+
+    # Seed Events
+    for evt in events_data:
+        cursor.execute("INSERT INTO events (id, title, date, time, location, description, image_url, status, external_link, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                       (str(uuid.uuid4()), evt["title"], evt["date"], evt["time"], evt["location"], evt["description"], evt["image_url"], evt["status"], evt["external_link"], datetime.datetime.utcnow()))
+
+    conn.commit()
+    conn.close()
+    print("Sync seed complete.")
+
+if __name__ == "__main__":
+    seed()
