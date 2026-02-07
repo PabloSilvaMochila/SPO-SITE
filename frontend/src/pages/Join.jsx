@@ -28,8 +28,6 @@ export default function Join() {
           <ul className="space-y-4">
             <BenefitItem text="Presença no Diretório Oficial de Especialistas" />
             <BenefitItem text="Descontos exclusivos em congressos e eventos" />
-            <BenefitItem text="Acesso a programas de educação continuada" />
-            <BenefitItem text="Defesa profissional e assessoria jurídica" />
             <BenefitItem text="Networking com líderes da área" />
           </ul>
 
@@ -45,7 +43,7 @@ export default function Join() {
                 <Mail className="w-4 h-4 text-primary" /> secretaria@spo.com.br
               </div>
               <div className="flex items-center gap-2">
-                <Phone className="w-4 h-4 text-primary" /> (91) 3222-0000
+                <Phone className="w-4 h-4 text-primary" /> +55 91 9122-2234
               </div>
             </div>
           </div>

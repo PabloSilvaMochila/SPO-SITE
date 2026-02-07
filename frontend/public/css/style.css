@@ -48,6 +48,11 @@ body {
     color: hsl(var(--foreground));
     font-family: 'Manrope', sans-serif;
     font-feature-settings: "rlig" 1, "calt" 1;
+    background-image: url('https://customer-assets.emergentagent.com/job_spo-medical/artifacts/gcsxwqvv_%20corazuol.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
 }
 
 h1, h2, h3, h4, h5, h6 {

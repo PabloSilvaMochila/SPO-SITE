@@ -23,7 +23,7 @@ function ScrollToTop() {
 
 function App() {
   return (
-    <div className="App min-h-screen bg-secondary/30 font-sans text-stone-900">
+    <div className="App min-h-screen font-sans text-stone-900">
       <BrowserRouter>
         <ScrollToTop />
         <Routes>
