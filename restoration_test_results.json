@@ -1,0 +1,37 @@
+{
+  "total_tests": 5,
+  "passed_tests": 4,
+  "success_rate": 80.0,
+  "results": [
+    {
+      "test": "Backend /api/doctors endpoint",
+      "success": true,
+      "details": "Returns 5 doctors with correct structure",
+      "timestamp": "2026-02-07T16:55:21.334998"
+    },
+    {
+      "test": "Frontend Home page",
+      "success": true,
+      "details": "React app loads correctly",
+      "timestamp": "2026-02-07T16:55:21.377735"
+    },
+    {
+      "test": "Frontend Directory page",
+      "success": true,
+      "details": "SPA routing works correctly",
+      "timestamp": "2026-02-07T16:55:21.424311"
+    },
+    {
+      "test": "FastAPI Backend Verification",
+      "success": true,
+      "details": "Confirmed via API functionality",
+      "timestamp": "2026-02-07T16:55:21.510144"
+    },
+    {
+      "test": "Authentication System",
+      "success": false,
+      "details": "Login failed with status 401",
+      "timestamp": "2026-02-07T16:55:21.777596"
+    }
+  ]
+}
