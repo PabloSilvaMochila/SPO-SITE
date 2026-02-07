@@ -12,6 +12,13 @@ doctors_data = [
         "specialty": "Conselheiro Fiscal Suplente",
         "contact_info": "", # Not provided, leaving blank or can use default contact
         "image_url": "https://customer-assets.emergentagent.com/job_spo-medical/artifacts/ywr9fmpn_WhatsApp%20Image%202025-12-23%20at%2013.23.32.jpeg"
+    },
+    {
+        "name": "Thaís Sousa Mendes",
+        "city": "Belém",
+        "specialty": "Diretoria da SPO",
+        "contact_info": "",
+        "image_url": "https://customer-assets.emergentagent.com/job_spo-medical/artifacts/gsh1x86w_image.png"
     }
 ]
 
