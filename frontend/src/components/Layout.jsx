@@ -39,7 +39,7 @@ export default function Layout() {
             <NavLink to="/" active={isActive("/")}>Início</NavLink>
             <NavLink to="/about" active={isActive("/about")}>Sobre a S.P.O.</NavLink>
             <NavLink to="/events" active={isActive("/events")}>Eventos</NavLink>
-            <NavLink to="/directory" active={isActive("/directory")}>Diretório</NavLink>
+            <NavLink to="/directory" active={isActive("/directory")}>Associados</NavLink>
             <Link 
               to="/join"
               className={cn(
@@ -103,7 +103,7 @@ export default function Layout() {
                className={cn("px-4 py-4 rounded-lg font-medium text-lg", isActive("/directory") ? "bg-primary/5 text-primary" : "text-stone-600")}
                onClick={() => setMobileMenuOpen(false)}
              >
-               Diretório
+               Associados
              </Link>
              <Link 
                to="/join" 

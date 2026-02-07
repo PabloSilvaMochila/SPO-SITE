@@ -38,9 +38,9 @@ export default function Directory() {
   return (
     <div className="max-w-7xl mx-auto">
       <div className="text-center mb-16">
-        <h1 className="font-serif text-4xl md:text-6xl text-primary-900 mb-6">Encontre um Especialista</h1>
+        <h1 className="font-serif text-4xl md:text-6xl text-primary-900 mb-6">Nossos Associados</h1>
         <p className="text-lg text-stone-500 max-w-2xl mx-auto">
-          Busque em nosso diretório completo de profissionais de oftalmologia verificados.
+          Conheça os profissionais que fazem parte da Sociedade Paraense de Oftalmologia.
         </p>
       </div>
 
