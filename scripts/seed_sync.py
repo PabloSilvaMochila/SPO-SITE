@@ -47,6 +47,13 @@ doctors_data = [
         "specialty": "Conselho Fiscal",
         "contact_info": "",
         "image_url": "https://customer-assets.emergentagent.com/job_spo-medical/artifacts/g99n4wa1_WhatsApp%20Image%202025-12-23%20at%2013.24.00.jpeg"
+    },
+    {
+        "name": "Márcia Silva Ferreira",
+        "city": "Belém",
+        "specialty": "Diretoria SPO",
+        "contact_info": "",
+        "image_url": "https://customer-assets.emergentagent.com/job_spo-medical/artifacts/zs19ws0p_WhatsApp%20Image%202025-12-23%20at%2013.47.04.jpeg"
     }
 ]
 
