@@ -81,45 +81,39 @@ class MedicalAssociationAPITester:
 
     def test_login(self):
         """Test admin login"""
-        login_data = {
-            "username": "admin@medassoc.com",
-            "password": "admin123"
-        }
-        
-        # Use form data for OAuth2PasswordRequestForm
-        success, response = self.run_test(
-            "Admin Login",
-            "POST",
-            "api/auth/login",
-            200,
-            data=login_data,
-            headers={'Content-Type': 'application/x-www-form-urlencoded'}
-        )
-        
-        # Try with form data encoding
-        if not success:
-            try:
-                url = f"{self.base_url}/api/auth/login"
-                form_data = {
-                    'username': 'admin@medassoc.com',
-                    'password': 'admin123'
-                }
-                response_obj = requests.post(url, data=form_data, timeout=10)
+        try:
+            url = f"{self.base_url}/api/auth/login"
+            form_data = {
+                'username': 'admin@medassoc.com',
+                'password': 'admin123'
+            }
+            
+            print(f"\n🔍 Testing Admin Login...")
+            print(f"   URL: {url}")
+            print(f"   Method: POST (Form Data)")
+            
+            response_obj = requests.post(url, data=form_data, timeout=10)
+            print(f"   Status: {response_obj.status_code}")
+            
+            if response_obj.status_code == 200:
+                response = response_obj.json()
+                self.log_test("Admin Login", True)
                 
-                if response_obj.status_code == 200:
-                    response = response_obj.json()
-                    success = True
-                    self.log_test("Admin Login (Form Data)", True)
-                else:
-                    self.log_test("Admin Login (Form Data)", False, f"Status: {response_obj.status_code}")
+                if 'access_token' in response:
+                    self.token = response['access_token']
+                    print(f"   Token obtained: {self.token[:20]}...")
+                    return True
+            else:
+                try:
+                    error_body = response_obj.json()
+                    details = f"Status: {response_obj.status_code} - {error_body}"
+                except:
+                    details = f"Status: {response_obj.status_code} - {response_obj.text[:200]}"
+                self.log_test("Admin Login", False, details)
                     
-            except Exception as e:
-                self.log_test("Admin Login (Form Data)", False, str(e))
+        except Exception as e:
+            self.log_test("Admin Login", False, str(e))
         
-        if success and 'access_token' in response:
-            self.token = response['access_token']
-            print(f"   Token obtained: {self.token[:20]}...")
-            return True
         return False
 
     def test_get_doctors_empty(self):
